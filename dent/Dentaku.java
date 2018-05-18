@@ -8,7 +8,7 @@ public class Dentaku extends JFrame implements ActionListener{
   JTextField kekka_middle = new JTextField("0"); // 計算の途中式を表示するテキストフィールド
   String[] bTxt={"CE","C","←","÷","7","8","9","×","4","5","6","-","1","2","3","+","+/-","0",".","="}; // ボタンの追加はこの行
   String enzan = "=";
-  long num, total;
+  double num, total;
 
   public Dentaku() { // 画面レイアウトの作成
     setTitle("簡易ー電卓");
@@ -44,7 +44,7 @@ public class Dentaku extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e) { // ボタンが押されたときの処理
     String x = ((JButton)e.getSource()).getText(); // 押されたボタンのテキストを取得
     if( Character.isDigit(x.charAt(0)) ){ // 数字ボタン
-      num = num * 10 + Long.parseLong(x);
+      num = num * 10 + Double.parseDouble(x);
       kekka.setText(String.valueOf(num));
     }else if( x=="." ){ // 小数点ボタン
 
@@ -52,21 +52,24 @@ public class Dentaku extends JFrame implements ActionListener{
       num = total = 0;
       kekka.setText("0");
       enzan = "=";
-    }else if( x=="CE" ){ // 一つクリアボタン
+    }else if( x =="CE" ){ // 一つクリアボタン
       num = 0;
       kekka.setText("0");
-    }else if( x=="←" ){ // 一つ戻るボタン
+    }else if( x =="←" ){ // 一つ戻るボタン
       num = 0;
       kekka.setText("0");
-    }}else if( x=="+/-" ){ // + or -　を指定するボタン
-      if()
+    }else if( x =="+/-" ){ // + or - を指定するボタン
+
     }
     else{ // 演算ボタン
-      if( enzan=="=" ) total = num;
-      else if( enzan=="+" ) total += num;
-      else if( enzan=="-" ) total -= num;
-      else if( enzan=="×" ) total *= num;
-      else if( enzan=="÷" ) total /= num;
+      if( enzan=="=" ){ total = num;}
+      else if( enzan=="+" ) {total += num;}
+      else if( enzan=="-" ) {total -= num;}
+      else if( enzan=="×" ) {total *= num;}
+      else if( enzan=="÷" ) {
+        if(num == 0)kekka.setText("エラー");
+        total /= num;
+      }
       //←ここにコードを追加すること
       kekka.setText(String.valueOf(total));
       if( x=="=" ) num = total;
