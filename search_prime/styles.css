@@ -1,0 +1,17 @@
+
+/*     comon      */
+body{
+  font-size: 14px;
+  font-family: Verdana, sans-serif;
+  color: #333;
+}
+
+a{
+  text-decoration: none;
+}
+
+p{
+  line-height: 2;
+}
+
+/*      header     */
