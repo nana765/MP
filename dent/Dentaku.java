@@ -16,7 +16,9 @@ public class Dentaku extends JFrame implements ActionListener{
   String middle = "Clear"; //途中式を格納する
   //String Data[] = new String[10]; //過去の履歴を格納する用
   double num, total;
-  int cnt = 0;
+  int num_output;
+  String Decimal = "F";
+  int decimal_cnt = 0;
   int i;
   String before_middle="---";
   String before2_middle="---";
@@ -40,9 +42,7 @@ public class Dentaku extends JFrame implements ActionListener{
     kekka.setBackground(Color.white);
     panel1.add(kekka);
 
-  /*for(i = 0; i < 10 ; i++){
-      panel3.add(data[i]);
-    }*/
+    //for(i = 0; i < 10 ; i++){panel3.add(data[i]);}
     panel3.add(caption2);
     panel3.add(rireki1);
     panel3.add(rireki2);
@@ -65,19 +65,34 @@ public class Dentaku extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e) { // ボタンが押されたときの処理
     String x = ((JButton)e.getSource()).getText(); // 押されたボタンのテキストを取得
     if( Character.isDigit(x.charAt(0)) ){ // 数字ボタン
-      num = num * 10 + Double.parseDouble(x);
-      kekka.setText(String.valueOf(num));
+      if(Decimal == "T"){
+        num = Double.parseDouble(x) / 10 + num;
+        kekka.setText(String.valueOf(num));
+      }else{
+        num = num * 10 + Double.parseDouble(x);
+        num_output = (int)num;
+        kekka.setText(String.valueOf(num_output));
+
+      }
+      //kekka.setText(String.valueOf(num));
     }else if( x=="." ){ // 小数点ボタン
-      kekka.setText(String.valueOf(num + x));
+      Decimal = "T";
+      decimal_cnt++;
+      kekka.setText(String.valueOf(num_output + x));
     }else if( x=="C" ){ // 全クリアボタン
       num = total = 0;
+      Decimal = "F";
       kekka.setText("0");
       middle = "Clear";
       kekka_middle.setText(middle);
+      Decimal = "F";
+      decimal_cnt = 0;
       enzan = "=";
     }else if( x =="CE" ){ // 一つクリアボタン
       num = 0;
       kekka.setText("0");
+      decimal_cnt = 0;
+      Decimal = "F";
       //kekka_middle.setText(middle);
 
     }else if( x =="←" ){ // 一つ戻るボタン
@@ -129,6 +144,8 @@ public class Dentaku extends JFrame implements ActionListener{
       }else{
         num = 0;
       }
+      Decimal = "F";
+      decimal_cnt = 0;
       enzan = x;
     }
   rireki1.setText(before_middle);
